@@ -2,11 +2,12 @@
 #victor.oliveira@gmx.com
 import struct
 import zlib
+import sys
 
 class PBPExtract:
     def __init__(self):
-        self.pbp_name = 'RE.PBP'
-        self.img_name = 'IMAGE.IMG'
+        self.pbp_name = name
+        self.img_name = name.casefold().replace('pbp', 'img')
         self.pbp_file = open(self.pbp_name, 'rb')
         self.img_file = open(self.img_name, 'wb')
 
@@ -56,3 +57,8 @@ class PBPExtract:
             if size is not 37632:
                 buffer = zlib.decompress(buffer, -15)
             self.img_file.write(buffer)
+
+            
+a = PBPExtract(sys.argv[1])
+indexes = a._getImageIndexes()
+a._writeBlocks(a.psar_offset, indexes)
